@@ -1,7 +1,4 @@
-# AI Pitch Deck Generator – ЛР 2 (роль: AI Engineer)
-
-Этот каталог содержит артефакты роли **AI Engineer** для **Лабораторной работы №2** по проекту  
-**«AI Pitch Deck Generator» — автоматическая генерация презентаций (pitch deck) для стартапов.**
+# AI Pitch Deck Generator
 
 Фокус лабораторной:
 
