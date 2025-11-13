@@ -1,0 +1,5 @@
+# Minimal requirements for Lab 2 AI Engineer baseline.
+# All core scripts use only the Python standard library.
+# You may add LLM provider SDKs later (openai, anthropic, google-generativeai, etc.).
+
+python-dotenv>=1.0.0
