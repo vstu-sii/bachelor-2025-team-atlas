@@ -1,0 +1,275 @@
+[
+  {
+    "id": "d1",
+    "startup_id": "s1",
+    "industry": "Mobility / Logistics",
+    "stage": "Seed",
+    "language": "en",
+    "slides": [
+      {
+        "section": "Title",
+        "title": "GreenFleet — decarbonizing last-mile delivery",
+        "bullets": [
+          "B2B SaaS for electric and mixed delivery fleets",
+          "Reduce fuel costs and CO2 emissions through smarter routing"
+        ]
+      },
+      {
+        "section": "Problem",
+        "title": "Last-mile delivery is expensive and carbon intensive",
+        "bullets": [
+          "Fuel and energy costs are growing faster than revenue",
+          "Fleet managers lack unified view of routes and charging constraints",
+          "Regulations push for lower emissions in urban areas"
+        ]
+      },
+      {
+        "section": "Solution",
+        "title": "Route optimization tailored for electric and hybrid fleets",
+        "bullets": [
+          "AI-based routing that accounts for traffic, payload and battery levels",
+          "Charging-aware route planner with dynamic suggestions",
+          "Driver behavior recommendations based on telematics data"
+        ]
+      },
+      {
+        "section": "Market",
+        "title": "Large and growing last-mile logistics market",
+        "bullets": [
+          "TAM: urban last-mile delivery fleets in EU and UK",
+          "Initial focus on fleets with 50–500 vehicles",
+          "Regulatory pressure accelerates EV adoption"
+        ]
+      },
+      {
+        "section": "Business Model",
+        "title": "SaaS per-vehicle subscription",
+        "bullets": [
+          "Monthly fee per active vehicle",
+          "Add-ons for premium analytics and API access",
+          "Implementation and onboarding services"
+        ]
+      },
+      {
+        "section": "Traction",
+        "title": "Early pilots with measurable savings",
+        "bullets": [
+          "3 paid pilots with mid-size logistics providers",
+          "Up to 12% fuel cost reduction in first 3 months",
+          "Pipeline of 15 qualified prospects"
+        ]
+      },
+      {
+        "section": "Product",
+        "title": "Integrations and tech",
+        "bullets": [
+          "Integrations with major telematics providers",
+          "Web dashboard for fleet managers",
+          "REST API for partners"
+        ]
+      },
+      {
+        "section": "Team",
+        "title": "Team with logistics and AI background",
+        "bullets": [
+          "CEO: 7+ years in last-mile logistics operations",
+          "CTO: PhD in optimization and routing problems",
+          "Advisors from major EU logistics companies"
+        ]
+      },
+      {
+        "section": "Roadmap",
+        "title": "Expansion to new markets and features",
+        "bullets": [
+          "Next 12 months: focus on EU mid-market fleets",
+          "Add predictive maintenance and fleet health modules",
+          "Explore partnerships with EV OEMs"
+        ]
+      },
+      {
+        "section": "Ask",
+        "title": "Raising seed round to scale pilots",
+        "bullets": [
+          "Seed round to expand engineering and sales",
+          "12–18 months runway to reach €1M ARR",
+          "Focus on EU and UK last-mile fleets"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d2",
+    "startup_id": "s2",
+    "industry": "Healthcare / AI",
+    "stage": "Pre-seed",
+    "language": "en",
+    "slides": [
+      {
+        "section": "Title",
+        "title": "MedAI Triage — faster, safer intake for clinics",
+        "bullets": [
+          "AI assistant for nurse triage in small clinics",
+          "Standardizes questions and risk levels"
+        ]
+      },
+      {
+        "section": "Problem",
+        "title": "Manual triage is slow and inconsistent",
+        "bullets": [
+          "Nurses use different mental checklists",
+          "High risk of missing red flags during busy hours",
+          "Patients wait too long before being seen by a doctor"
+        ]
+      },
+      {
+        "section": "Solution",
+        "title": "Structured AI triage assistant",
+        "bullets": [
+          "Adaptive interview based on symptoms and history",
+          "Risk classification aligned with clinical guidelines",
+          "Clear handoff summary for doctors"
+        ]
+      },
+      {
+        "section": "Market",
+        "title": "Outpatient clinics and urgent care centers",
+        "bullets": [
+          "Initial focus on small clinics with 5–20 nurses",
+          "Reimbursable workflows where faster triage matters",
+          "Regulatory pressure on patient safety and documentation"
+        ]
+      },
+      {
+        "section": "Business Model",
+        "title": "Per-clinic subscription with seat-based pricing",
+        "bullets": [
+          "Monthly fee per clinic plus per-seat add-on",
+          "Implementation and training package",
+          "Upsell to analytics and reporting"
+        ]
+      },
+      {
+        "section": "Traction",
+        "title": "Clinical pilots and early adopters",
+        "bullets": [
+          "2 pilot sites with university-affiliated clinics",
+          "Average triage time reduced by ~30%",
+          "Positive feedback from nursing staff"
+        ]
+      },
+      {
+        "section": "Team",
+        "title": "Hybrid team of clinicians and ML engineers",
+        "bullets": [
+          "Co-founders: ex-EMR product lead and ER physician",
+          "ML team with experience in clinical NLP",
+          "Advisory board with triage experts"
+        ]
+      },
+      {
+        "section": "Roadmap",
+        "title": "From pilots to commercial product",
+        "bullets": [
+          "Q1–Q2: regulatory and data privacy hardening",
+          "Q3–Q4: expand to 20+ paying clinics",
+          "Long term: integrate with major EMR vendors"
+        ]
+      },
+      {
+        "section": "Ask",
+        "title": "Pre-seed to complete product and certification",
+        "bullets": [
+          "Funding for regulatory, product and go-to-market",
+          "18 months runway to reach first 50 clinics"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d3",
+    "startup_id": "s3",
+    "industry": "SaaS / Fintech",
+    "stage": "Seed",
+    "language": "en",
+    "slides": [
+      {
+        "section": "Title",
+        "title": "SubSync — control your SaaS spend",
+        "bullets": [
+          "Single view of all recurring subscriptions",
+          "Stop paying for unused and duplicate tools"
+        ]
+      },
+      {
+        "section": "Problem",
+        "title": "SMBs lose money on forgotten subscriptions",
+        "bullets": [
+          "No central visibility for all recurring payments",
+          "Duplicate tools across teams",
+          "Hard to renegotiate prices without benchmarks"
+        ]
+      },
+      {
+        "section": "Solution",
+        "title": "SaaS subscription command center",
+        "bullets": [
+          "Automatic import from bank and card statements",
+          "Smart grouping of vendors and contracts",
+          "Benchmarks and negotiation playbooks"
+        ]
+      },
+      {
+        "section": "Market",
+        "title": "Global SMB SaaS spend",
+        "bullets": [
+          "Focus on companies with 20–300 employees",
+          "Finance and ops teams as primary users",
+          "Growing number of SaaS tools per employee"
+        ]
+      },
+      {
+        "section": "Business Model",
+        "title": "Subscription plus savings share",
+        "bullets": [
+          "Flat monthly fee per company",
+          "Performance fee on realized savings",
+          "Premium plan with dedicated customer success"
+        ]
+      },
+      {
+        "section": "Traction",
+        "title": "Early customers and strong ROI",
+        "bullets": [
+          "10 paying SMBs with average 18% SaaS cost reduction",
+          "Pipeline through accounting and MSP partners"
+        ]
+      },
+      {
+        "section": "Team",
+        "title": "Fintech and SaaS procurement experience",
+        "bullets": [
+          "Founders: ex-finance lead and ex-SaaS sales director",
+          "Engineering team from B2B fintech startups"
+        ]
+      },
+      {
+        "section": "Roadmap",
+        "title": "Deeper integrations and automation",
+        "bullets": [
+          "Connectors to major accounting tools",
+          "Automated cancellation workflows",
+          "Expanding partner channel"
+        ]
+      },
+      {
+        "section": "Ask",
+        "title": "Seed round to scale sales and integrations",
+        "bullets": [
+          "Grow sales and customer success",
+          "Build more integrations and automation",
+          "Reach 200+ SMB customers"
+        ]
+      }
+    ]
+  }
+]
