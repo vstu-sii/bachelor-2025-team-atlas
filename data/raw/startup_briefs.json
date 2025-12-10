@@ -1,0 +1,41 @@
+[
+  {
+    "id": "s1",
+    "name": "GreenFleet",
+    "industry": "Mobility / Logistics",
+    "stage": "Seed",
+    "language": "en",
+    "brief": "GreenFleet is a B2B SaaS platform that helps last-mile logistics companies reduce fuel costs and CO2 emissions by optimizing routes for electric vans and mixed fleets. The product uses telematics and historical delivery data to recommend optimal routes, charging stops and driver behavior improvements.",
+    "constraints": {
+      "target_slide_count": 10,
+      "tone": "formal",
+      "audience": "early-stage VC"
+    }
+  },
+  {
+    "id": "s2",
+    "name": "MedAI Triage",
+    "industry": "Healthcare / AI",
+    "stage": "Pre-seed",
+    "language": "en",
+    "brief": "MedAI Triage is an AI assistant for small clinics that helps nurses perform faster and more consistent triage by asking structured questions and suggesting risk level. It integrates into existing EMR and reduces average triage time by 30%.",
+    "constraints": {
+      "target_slide_count": 11,
+      "tone": "formal",
+      "audience": "healthtech VC"
+    }
+  },
+  {
+    "id": "s3",
+    "name": "SubSync",
+    "industry": "SaaS / Fintech",
+    "stage": "Seed",
+    "language": "en",
+    "brief": "SubSync is a SaaS platform for SMBs that tracks all recurring subscriptions (software, tools, utilities) in one place, flags duplicates and negotiates better pricing using aggregated benchmarks.",
+    "constraints": {
+      "target_slide_count": 10,
+      "tone": "storytelling",
+      "audience": "B2B SaaS investor"
+    }
+  }
+]
