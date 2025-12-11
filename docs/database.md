@@ -287,7 +287,7 @@
 
 ### Критические индексы для сценариев использования
 
-'''sql
+```sql
 -- UC1: Загрузка и оптимизация презентации
 INDEX idx_parsing_status (parsing_status) ON PresentationFiles
 INDEX idx_project_version (project_id, version_id) ON Slides
