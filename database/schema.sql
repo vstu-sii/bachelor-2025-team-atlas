@@ -1,17 +1,16 @@
 CREATE DATABASE IF NOT EXISTS autopitch;
 USE autopitch;
 
---  Пользователи 
 CREATE TABLE Users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    telegram_id BIGINT UNIQUE NOT NULL,                    -- ID из Telegram
-    telegram_username VARCHAR(255),                        -- @username
-    telegram_first_name VARCHAR(255),                      -- Имя в Telegram
-    telegram_last_name VARCHAR(255),                       -- Фамилия в Telegram
-    email VARCHAR(255),                                    -- Резервный email
+    telegram_id BIGINT UNIQUE NOT NULL,                    
+    telegram_username VARCHAR(255),                        
+    telegram_first_name VARCHAR(255),                      
+    telegram_last_name VARCHAR(255),                       
+    email VARCHAR(255),                                   
     subscription_tier ENUM('free', 'pro', 'business') DEFAULT 'free',
-    projects_limit INT UNSIGNED DEFAULT 3,                 -- Лимит проектов по подписке
-    export_limit_daily INT UNSIGNED DEFAULT 5,             -- Дневной лимит экспорта
+    projects_limit INT UNSIGNED DEFAULT 3,                 
+    export_limit_daily INT UNSIGNED DEFAULT 5,             
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE,
@@ -21,21 +20,20 @@ CREATE TABLE Users (
     INDEX idx_created_at (created_at)
 );
 
---  Проекты (Презентации) 
 CREATE TABLE Projects (
-    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),              -- UUID для безопасности
+    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),              
     user_id BIGINT UNSIGNED NOT NULL,
     title VARCHAR(255) NOT NULL DEFAULT 'Новая презентация',
     description TEXT,
     status ENUM('draft', 'uploaded', 'parsing', 'parsed', 'optimizing', 'ready', 'exported', 'archived') DEFAULT 'draft',
-    template_id VARCHAR(100) DEFAULT 'default',            -- Используемый шаблон
-    industry VARCHAR(100),                                 -- Индустрия стартапа (для рекомендаций)
+    template_id VARCHAR(100) DEFAULT 'default',           
+    industry VARCHAR(100),                                 
     language ENUM('ru', 'en') DEFAULT 'ru',
     visibility ENUM('private', 'team', 'public') DEFAULT 'private',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     last_exported_at TIMESTAMP NULL,
-    metadata JSON,                                         -- Дополнительные метаданные
+    metadata JSON,                                        
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     INDEX idx_user_id (user_id),
     INDEX idx_status (status),
@@ -44,7 +42,7 @@ CREATE TABLE Projects (
     INDEX idx_template (template_id)
 );
 
---  Файлы презентаций 
+
 CREATE TABLE PresentationFiles (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     project_id CHAR(36) NOT NULL,
@@ -52,9 +50,9 @@ CREATE TABLE PresentationFiles (
     file_type ENUM('pptx', 'pdf') NOT NULL,
     source_type ENUM('upload', 'generated', 'imported') DEFAULT 'upload',
     original_filename VARCHAR(255),
-    file_size BIGINT UNSIGNED,                            -- В байтах
-    storage_path VARCHAR(500) NOT NULL,                   -- Путь в S3/облаке
-    md5_hash CHAR(32),                                    -- Для проверки дубликатов
+    file_size BIGINT UNSIGNED,                           
+    storage_path VARCHAR(500) NOT NULL,                   
+    md5_hash CHAR(32),                                    
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     parsing_status ENUM('pending', 'processing', 'completed', 'failed') DEFAULT 'pending',
     parsing_started_at TIMESTAMP NULL,
@@ -67,7 +65,7 @@ CREATE TABLE PresentationFiles (
     INDEX idx_upload_date (upload_date)
 );
 
---  Слайды 
+
 CREATE TABLE Slides (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     project_id CHAR(36) NOT NULL,
@@ -76,12 +74,12 @@ CREATE TABLE Slides (
     slide_type ENUM('title', 'problem', 'solution', 'market', 'product', 
                    'business_model', 'team', 'traction', 'financials', 
                    'competitors', 'roadmap', 'contact', 'other') DEFAULT 'other',
-    original_content JSON,                                -- Контент до оптимизации
-    optimized_content JSON,                               -- Контент после LLM
-    applied_template JSON,                                -- Примененный шаблон оформления
+    original_content JSON,                               
+    optimized_content JSON,                              
+    applied_template JSON,                              
     layout_type VARCHAR(50) DEFAULT 'standard',
-    ai_feedback TEXT,                                     -- Комментарии ИИ по улучшению
-    is_modified BOOLEAN DEFAULT FALSE,                    -- Было ли вручную изменено
+    ai_feedback TEXT,                                    
+    is_modified BOOLEAN DEFAULT FALSE,                    
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (project_id) REFERENCES Projects(id) ON DELETE CASCADE,
@@ -92,7 +90,7 @@ CREATE TABLE Slides (
     INDEX idx_slide_number (slide_number)
 );
 
---  AI Операции 
+
 CREATE TABLE AI_Operations (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     project_id CHAR(36) NOT NULL,
@@ -100,8 +98,8 @@ CREATE TABLE AI_Operations (
     status ENUM('pending', 'processing', 'completed', 'failed', 'cancelled') DEFAULT 'pending',
     llm_model VARCHAR(50) DEFAULT 'gpt-4',
     prompt_version VARCHAR(20) DEFAULT '1.0',
-    input_data JSON,                                      -- Входные данные для операции
-    output_data JSON,                                     -- Результаты операции
+    input_data JSON,                                      
+    output_data JSON,                                     
     tokens_used INT UNSIGNED DEFAULT 0,
     processing_time_ms INT UNSIGNED,
     cost_estimate DECIMAL(10,6) DEFAULT 0.000000,
@@ -117,14 +115,14 @@ CREATE TABLE AI_Operations (
     INDEX idx_project_status (project_id, status)
 );
 
--- Шаблоны дизайна 
+
 CREATE TABLE Templates (
-    id VARCHAR(100) PRIMARY KEY,                          -- Человекочитаемый ID
+    id VARCHAR(100) PRIMARY KEY,                         
     name VARCHAR(255) NOT NULL,
     description TEXT,
     category ENUM('professional', 'creative', 'minimal', 'corporate', 'startup') DEFAULT 'professional',
-    industry_focus JSON DEFAULT '[]',                     -- Для каких индустрий подходит
-    config_schema JSON NOT NULL,                          -- JSON Schema для конфигурации
+    industry_focus JSON DEFAULT '[]',                     
+    config_schema JSON NOT NULL,                          
     thumbnail_url VARCHAR(500),
     is_active BOOLEAN DEFAULT TRUE,
     is_premium BOOLEAN DEFAULT FALSE,
@@ -136,7 +134,7 @@ CREATE TABLE Templates (
     INDEX idx_is_premium (is_premium)
 );
 
--- Экспорты 
+
 CREATE TABLE Exports (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     project_id CHAR(36) NOT NULL,
@@ -146,7 +144,7 @@ CREATE TABLE Exports (
     quality ENUM('standard', 'high') DEFAULT 'standard',
     file_size BIGINT UNSIGNED,
     download_url VARCHAR(500),
-    expires_at TIMESTAMP NULL,                            -- Время жизни ссылки
+    expires_at TIMESTAMP NULL,                            
     status ENUM('processing', 'completed', 'failed') DEFAULT 'processing',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     completed_at TIMESTAMP NULL,
@@ -158,7 +156,7 @@ CREATE TABLE Exports (
     INDEX idx_status (status)
 );
 
---  Использование (для лимитов) 
+
 CREATE TABLE UsageStats (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT UNSIGNED NOT NULL,
@@ -174,10 +172,10 @@ CREATE TABLE UsageStats (
     INDEX idx_date (date)
 );
 
---  Кэш AI-ответов 
+
 CREATE TABLE AI_Cache (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    prompt_hash CHAR(64) NOT NULL,                        -- SHA-256 хэш промпта
+    prompt_hash CHAR(64) NOT NULL,                        
     model VARCHAR(50) NOT NULL,
     prompt_version VARCHAR(20) NOT NULL,
     response_json JSON NOT NULL,
@@ -191,19 +189,18 @@ CREATE TABLE AI_Cache (
     INDEX idx_last_accessed (last_accessed)
 );
 
---  Системные настройки 
+
 CREATE TABLE SystemSettings (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     setting_key VARCHAR(100) UNIQUE NOT NULL,
     setting_value JSON,
     description TEXT,
-    is_public BOOLEAN DEFAULT FALSE,                      -- Видно ли клиентам
+    is_public BOOLEAN DEFAULT FALSE,                      
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_setting_key (setting_key),
     INDEX idx_is_public (is_public)
 );
 
---  Триггеры 
 DELIMITER //
 CREATE TRIGGER after_project_create
     AFTER INSERT ON Projects
@@ -243,15 +240,14 @@ BEGIN
 END//
 DELIMITER ;
 
---  Начальные данные 
 
--- Базовые шаблоны
+
 INSERT INTO Templates (id, name, description, category, config_schema, is_premium) VALUES
 ('default', 'Стандартный', 'Чистый профессиональный шаблон', 'professional', '{"colors": {"primary": "#2563eb", "secondary": "#1e293b"}, "fonts": {"heading": "Inter", "body": "Inter"}, "layouts": ["title", "split", "full"]}', FALSE),
 ('venture', 'Венчурный', 'Для питчей инвесторам', 'startup', '{"colors": {"primary": "#7c3aed", "secondary": "#4f46e5"}, "fonts": {"heading": "Montserrat", "body": "Open Sans"}, "layouts": ["title", "focus", "grid"]}', FALSE),
 ('corporate', 'Корпоративный', 'Формальный стиль для B2B', 'corporate', '{"colors": {"primary": "#0f172a", "secondary": "#475569"}, "fonts": {"heading": "Roboto", "body": "Roboto"}, "layouts": ["title", "classic", "minimal"]}', TRUE);
 
--- Системные настройки
+
 INSERT INTO SystemSettings (setting_key, setting_value, description, is_public) VALUES
 ('subscription_limits', '{"free": {"projects": 3, "exports_per_day": 5, "ai_operations": 20}, "pro": {"projects": 50, "exports_per_day": 50, "ai_operations": 500}, "business": {"projects": 1000, "exports_per_day": 200, "ai_operations": 5000}}', 'Лимиты по подпискам', TRUE),
 ('file_limits', '{"max_size_mb": 100, "allowed_types": ["pptx", "pdf"], "max_pages": 50}', 'Ограничения файлов', TRUE),
@@ -259,12 +255,11 @@ INSERT INTO SystemSettings (setting_key, setting_value, description, is_public) 
 ('export_settings', '{"pptx_quality": "high", "pdf_dpi": 150, "link_expiry_hours": 24}', 'Настройки экспорта', FALSE),
 ('supported_languages', '["ru", "en"]', 'Поддерживаемые языки', TRUE);
 
---  Создание пользователя БД 
+
 CREATE USER 'autopitch_user'@'%' IDENTIFIED BY 'StrongPass!2024';
 GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON autopitch.* TO 'autopitch_user'@'%';
 FLUSH PRIVILEGES;
 
---  Индексы для производительности 
 CREATE INDEX idx_slides_content ON Slides((CAST(optimized_content AS CHAR(1000))));
 CREATE INDEX idx_ai_cache_response ON AI_Cache((CAST(response_json AS CHAR(1000))));
 CREATE INDEX idx_projects_metadata ON Projects((CAST(metadata AS CHAR(1000))));
