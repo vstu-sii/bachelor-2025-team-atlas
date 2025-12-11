@@ -144,7 +144,7 @@ AutoPitch Deck Generator API — это сервис для автоматиче
 500 - Внутренняя ошибка сервера
 
 ### Примеры использования
-
+```bash
 #Аутентификация через Telegram
 curl -X POST https://api.autopitch.com/v1/auth/telegram \
   -H "Content-Type: application/json" \
