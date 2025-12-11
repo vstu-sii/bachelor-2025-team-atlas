@@ -3,10 +3,8 @@ USE autopitch;
 
 CREATE TABLE Users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    telegram_id BIGINT UNIQUE NOT NULL,                    
-    telegram_username VARCHAR(255),                        
-    telegram_first_name VARCHAR(255),                      
-    telegram_last_name VARCHAR(255),                       
+    username_id BIGINT UNIQUE NOT NULL,                    
+    username VARCHAR(255),                                              
     email VARCHAR(255),                                   
     subscription_tier ENUM('free', 'pro', 'business') DEFAULT 'free',
     projects_limit INT UNSIGNED DEFAULT 3,                 
@@ -15,7 +13,7 @@ CREATE TABLE Users (
     last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE,
     settings JSON DEFAULT '{"notifications": true, "theme": "light"}',
-    INDEX idx_telegram_id (telegram_id),
+    INDEX idx_telegram_id (username_id),
     INDEX idx_subscription_tier (subscription_tier),
     INDEX idx_created_at (created_at)
 );
