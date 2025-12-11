@@ -7,9 +7,9 @@ AutoPitch Deck Generator API — это сервис для автоматиче
 
 ## Основные возможности
 ### 1. Аутентификация
-  - Регистрация/вход через Telegram (POST /auth/telegram)
+  - Регистрация/вход  
 
-  - Использует Telegram Login Widget
+  - Использует Login Widget
 
   - Возвращает JWT-токены (access + refresh)
 
@@ -95,7 +95,7 @@ AutoPitch Deck Generator API — это сервис для автоматиче
 
 ## Как работает
 Основной workflow:
-1.Регистрация → Пользователь входит через Telegram
+1.Регистрация → Пользователь входит через сайт
 
 2.Создание проекта → Новый проект или загрузка существующей презентации
 
@@ -145,13 +145,11 @@ AutoPitch Deck Generator API — это сервис для автоматиче
 
 ### Примеры использования
 ```bash
-#Аутентификация через Telegram
-curl -X POST https://api.autopitch.com/v1/auth/telegram \
+#Аутентификация 
+curl -X POST https://api.autopitch.com/v1/auth/authorization \
   -H "Content-Type: application/json" \
   -d '{
     "id": 123456789,
-    "first_name": "Иван",
-    "last_name": "Стартапов",
     "username": "ivan_startup",
     "auth_date": 1600000000,
     "hash": "abc123..."
