@@ -1,3 +1,4 @@
+````mermaid
 graph TB
     %% Основные компоненты системы
     subgraph "AutoPitch Deck Generator"
