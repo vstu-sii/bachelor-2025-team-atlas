@@ -1,0 +1,324 @@
+openapi: 3.0.3
+info:
+  title: AutoPitch Deck Generator API
+  description: |
+    API для автоматической генерации и улучшения питч-презентаций стартапов.
+    Основные функции:
+    - Загрузка и парсинг существующих презентаций (PPTX/PDF)
+    - AI-оптимизация контента через LLM
+    - Генерация презентаций с нуля
+    - Применение профессиональных шаблонов дизайна
+    - Экспорт в PPTX и PDF
+  version: 1.0.0-alpha
+  contact:
+    name: AutoPitch Support
+    email: dev@autopitch.com
+
+servers:
+  - url: https://api.autopitch.com/v1
+    description: Production server
+  - url: https://staging.api.autopitch.com/v1
+    description: Staging server
+
+
+paths:
+  /auth/telegram:
+    post:
+      summary: Аутентификация через Telegram Widget
+      description: |
+        Регистрация или вход через Telegram Login Widget.
+        Если пользователь не существует - создается новая учетная запись.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelegramAuthRequest'
+      responses:
+        '200':
+          description: Успешная аутентификация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Невалидные данные от Telegram Widget
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Ошибка верификации данных Telegram
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-rate-limit:
+        window: 900
+        max: 10
+
+  /auth/logout:
+    post:
+      summary: Выход из системы
+      description: Инвалидация токена пользователя
+      tags:
+        - Authentication
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Успешный выход
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successfully logged out"
+                  timestamp:
+                    type: string
+                    format: date-time
+        '401':
+          description: Токен отсутствует или невалиден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      summary: Обновление access token
+      description: Получение новой пары access/refresh токенов
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refresh_token
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token полученный при аутентификации
+      responses:
+        '200':
+          description: Токены успешно обновлены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Refresh token невалиден или просрочен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+
+  
+  /projects:
+    get:
+      summary: Получить список проектов пользователя
+      description: |
+        Возвращает список всех презентационных проектов пользователя с краткой информацией.
+        Поддерживает пагинацию и фильтрацию по статусу.
+      tags:
+        - Projects
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Номер страницы для пагинации
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+          description: Количество проектов на странице
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, processing, optimized, ready, archived]
+          description: Фильтрация по статусу проекта
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [created_at_asc, created_at_desc, updated_at_asc, updated_at_desc]
+            default: created_at_desc
+          description: Порядок сортировки
+      responses:
+        '200':
+          description: Успешное получение списка проектов
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectBrief'
+                  pagination:
+                    $ref: '#/components/schemas/PaginationInfo'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+
+    post:
+      summary: Создать новый проект
+      description: |
+        Создает новый проект презентации.
+        Можно создать либо пустой проект (для генерации с нуля), 
+        либо сразу с загруженным файлом.
+      tags:
+        - Projects
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreateRequest'
+      responses:
+        '201':
+          description: Проект успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '400':
+          description: Невалидные данные запроса
+        '401':
+          description: Пользователь не авторизован
+        '422':
+          description: Ошибка валидации данных
+        '500':
+          description: Внутренняя ошибка сервера
+
+  /projects/{project_id}:
+    get:
+      summary: Получить детальную информацию о проекте
+      description: Возвращает полную информацию о проекте, включая все версии и файлы
+      tags:
+        - Projects
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: UUID идентификатор проекта
+      responses:
+        '200':
+          description: Успешное получение информации о проекте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '401':
+          description: Пользователь не авторизован
+        '404':
+          description: Проект не найден
+        '500':
+          description: Внутренняя ошибка сервера
+
+    put:
+      summary: Обновить информацию о проекте
+      description: Обновляет метаданные проекта (название, описание, настройки)
+      tags:
+        - Projects
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdateRequest'
+      responses:
+        '200':
+          description: Проект успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+        '400':
+          description: Невалидные данные запроса
+        '401':
+          description: Пользователь не авторизован
+        '404':
+          description: Проект не найден
+        '500':
+          description: Внутренняя ошибка сервера
+
+    delete:
+      summary: Удалить проект
+      description: |
+        Удаляет проект и все связанные данные (файлы, версии).
+        Операция необратима.
+      tags:
+        - Projects
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Проект успешно удален
+        '401':
+          description: Пользователь не авторизован
+        '404':
+          description: Проект не найден
+        '500':
+          description: Внутренняя ошибка сервера
+
+ 
