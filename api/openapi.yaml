@@ -22,7 +22,7 @@ servers:
 
 
 paths:
-  /auth/telegram:
+  /auth/Widget:
     post:
       summary: Аутентификация через  Widget
       description: |
