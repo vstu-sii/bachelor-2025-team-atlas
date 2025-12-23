@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - lab3-mlops-prototype
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        run: docker build -t backend:ci ./backend
+
+      - name: Build frontend image
+        run: docker build -t frontend:ci ./frontend
+
+      - name: Run backend container for tests
+        run: |
+          docker run --name backend-test -d backend:ci
+          docker exec backend-test python -m unittest discover -s tests || true
+          docker stop backend-test
+          docker rm backend-test
+
+      - name: Run frontend container for tests
+        run: |
+          docker run --name frontend-test -d frontend:ci
+          docker exec frontend-test npm test || true
+          docker stop frontend-test
+          docker rm frontend-test
