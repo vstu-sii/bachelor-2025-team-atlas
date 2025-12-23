@@ -1,2 +1,37 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/P3ZvldYO)
-# sii-project-template
+Архитектура проекта
+
+project/
+├─ backend/
+│   ├─ main.py
+│   ├─ req.txt
+│   └─ Dockerfile.dev
+├─ db/
+│   └─ init/
+├─ frontend/
+│   ├─ .next/
+│   ├─ app/
+│   ├─ node_modules/
+│   ├─ .dockerignore
+│   ├─ Dockerfile.dev
+│   ├─ next.config.js
+│   └─ package.json
+├─ llm-service/
+│   └─ Dockerfile.dev
+├─ monitoring/
+│   ├─ docker-compose.yml
+│   ├─ loki-config.yaml
+│   ├─ prometheus.yml
+│   ├─ promtail-config.yaml
+│   └─ grafana/
+│       └─ datasources.yaml
+├─ .github/
+│   └─ workflows/
+│       └─ ci-cd.yml
+├─ docker-compose.dev.yml
+└─ README.md
+
+
+Запуск проекта локально
+
+Перезодим в папку с окружением, выполняем команду: docker compose -f docker-compose.dev.yml up -d
+
