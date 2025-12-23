@@ -1,37 +1,13 @@
-Архитектура проекта
+# lab3-mlops
 
-project/
-├─ backend/
-│   ├─ main.py
-│   ├─ req.txt
-│   └─ Dockerfile.dev
-├─ db/
-│   └─ init/
-├─ frontend/
-│   ├─ .next/
-│   ├─ app/
-│   ├─ node_modules/
-│   ├─ .dockerignore
-│   ├─ Dockerfile.dev
-│   ├─ next.config.js
-│   └─ package.json
-├─ llm-service/
-│   └─ Dockerfile.dev
-├─ monitoring/
-│   ├─ docker-compose.yml
-│   ├─ loki-config.yaml
-│   ├─ prometheus.yml
-│   ├─ promtail-config.yaml
-│   └─ grafana/
-│       └─ datasources.yaml
-├─ .github/
-│   └─ workflows/
-│       └─ ci-cd.yml
-├─ docker-compose.dev.yml
-└─ README.md
+Проект включает **backend**, **frontend**, мониторинг и аналитические сервисы. Все сервисы полностью контейнеризированы с использованием **Docker** и **Docker Compose**.
 
+---
 
-Запуск проекта локально
+## 🚀 Запуск локально
 
-Перезодим в папку с окружением, выполняем команду: docker compose -f docker-compose.dev.yml up -d
+1. Перейдите в директорию с проектом:
 
+```bash
+cd monitoring
+docker-compose up -d
