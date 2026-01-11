@@ -1,2 +1,20 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/P3ZvldYO)
-# sii-project-template
+# AutoPitch Deck Generator
+
+AI-powered pitch deck generator for startups. Create professional investor presentations in minutes.
+
+## Features
+
+- 🤖 **AI Content Optimization** - GPT-4 enhances your presentation text
+- 🎨 **Professional Templates** - Ready-to-use designs for any industry
+- 📤 **One-Click Export** - PPTX and PDF formats
+- 🔄 **Version Control** - Track changes and restore previous versions
+- 📊 **Analytics Dashboard** - Track presentation performance
+
+## Quick Start
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Python 3.11+
+- Node.js 18+
+- OpenAI API key (for AI features)
